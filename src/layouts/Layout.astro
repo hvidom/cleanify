@@ -1,0 +1,41 @@
+---
+import Navbar from "@/components/nav/navbar";
+import TailwindIndicator from "@/components/tailwind-indicator.astro";
+import BackgroundMeteors from "@/components/ui/backgroundmeteors";
+import { ScrollToTop } from "@/components/scroll-to-top"
+import "@/styles/globals.css";
+import "@/styles/scrollbar.css";
+import { cn } from "@/lib/utils";
+import Footer from "@/components/nav/footer";
+import BaseHead from "@/components/nav/base-head.astro";
+type Props = {
+  title: string;
+  description?: string;
+  mainClass?: string;
+};
+
+const { title, description, mainClass } = Astro.props;
+
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+	<head>
+		<BaseHead title={title} description={description} />
+	  </head>
+
+	<body class="min-h-screen bg-background text-foreground relative overflow-x-hidden">
+		<TailwindIndicator />
+
+		<BackgroundMeteors client:visible />
+		
+		<div class="relative z-10">
+			<Navbar client:load />
+			<ScrollToTop client:load />
+			<main class={cn(mainClass)}>
+				<slot />
+			</main>
+			<Footer />
+		</div>
+	</body>
+</html>

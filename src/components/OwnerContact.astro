@@ -1,0 +1,150 @@
+---
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { MessageSquare, Phone, Mail, Clock, type LucideIcon } from "lucide-react";
+import { MorphyButton } from "./ui/morphy-button";
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface SupportOption {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+interface ContactFormLabels {
+  firstNameLabel: string;
+  firstNamePlaceholder: string;
+  lastNameLabel: string;
+  lastNamePlaceholder: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  messageLabel: string;
+  messagePlaceholder: string;
+  sendButtonText: string;
+}
+
+interface Props {
+  mainTitle?: string;
+  mainDescription?: string;
+  supportOptions?: SupportOption[];
+  contactFormTitle?: string;
+  contactFormLabels?: ContactFormLabels;
+  faqSectionTitle?: string;
+  faqs?: FAQItem[];
+  termsText?: string;
+  termsHref?: string;
+}
+
+const {
+  mainTitle = "How can we help you?",
+  mainDescription = "Our dedicated support team is here to assist you with any questions or concerns you may have.",
+  supportOptions = [
+    {
+      icon: MessageSquare,
+      title: "Live Chat",
+      description: "Chat with our support team in real-time",
+    },
+    {
+      icon: Phone,
+      title: "Phone Support",
+      description: "Call us at 1-800-123-4567",
+    },
+    {
+      icon: Mail,
+      title: "Email Support",
+      description: "support@example.com",
+    },
+    {
+      icon: Clock,
+      title: "Response Time",
+      description: "Within 24 hours",
+    },
+  ],
+  contactFormTitle = "Send us a message",
+  contactFormLabels = {
+    firstNameLabel: "First Name",
+    firstNamePlaceholder: "John",
+    lastNameLabel: "Last Name",
+    lastNamePlaceholder: "Doe",
+    emailLabel: "Email",
+    emailPlaceholder: "john@example.com",
+    messageLabel: "Message",
+    messagePlaceholder: "How can we help you?",
+    sendButtonText: "Send Message",
+  }
+} = Astro.props;
+---
+
+<section class="py-16">
+  <div class="container">
+    <div class="mx-auto max-w-4xl text-center">
+      <h1 class="mb-4 text-4xl font-bold tracking-tight">
+        {mainTitle}
+      </h1>
+      <p class="mb-8 text-lg text-muted-foreground">
+        {mainDescription}
+      </p>
+    </div>
+
+    <!-- Support Options -->
+    <div class="mb-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {supportOptions.map((option) => (
+        <Card className="flex flex-col items-center bg-background p-6 text-center">
+          <option.icon className="mb-4 size-8 text-primary" />
+          <h3 class="mb-2 font-semibold">{option.title}</h3>
+          <p class="text-sm text-muted-foreground">
+            {option.description}
+          </p>
+        </Card>
+      ))}
+    </div>
+
+    <!-- Contact Form -->
+    <div class="mx-auto mb-16 max-w-2xl">
+      <Card className="p-6">
+        <h2 class="mb-6 text-2xl font-semibold">{contactFormTitle}</h2>
+        <form class="space-y-4">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="space-y-2">
+              <label class="text-sm font-medium">
+                {contactFormLabels.firstNameLabel}
+              </label>
+              <Input placeholder={contactFormLabels.firstNamePlaceholder} />
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-medium">
+                {contactFormLabels.lastNameLabel}
+              </label>
+              <Input placeholder={contactFormLabels.lastNamePlaceholder} />
+            </div>
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium">
+              {contactFormLabels.emailLabel}
+            </label>
+            <Input
+              type="email"
+              placeholder={contactFormLabels.emailPlaceholder}
+            />
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium">
+              {contactFormLabels.messageLabel}
+            </label>
+            <Textarea
+              placeholder={contactFormLabels.messagePlaceholder}
+              className="min-h-[100px]"
+            />
+          </div>
+          <MorphyButton className="w-full size-lg" client:visible>
+            {contactFormLabels.sendButtonText}
+          </MorphyButton>
+        </form>
+      </Card>
+    </div>
+</section>

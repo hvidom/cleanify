@@ -1,0 +1,17 @@
+---
+import Feature from "@/components/feature";
+import Features from "@/components/features";
+import Layout from "@/layouts/Layout.astro";
+import Featurepics from "@/components/featurepics";
+import LogoCloud from "@/components/logo-cloud";
+import Testimonials from "@/components/testimonials";
+import Hero from "@/components/hero";
+---
+<Layout>
+    <Hero client:visible />
+    <Feature />
+    <Features client:only="react" />
+    <LogoCloud client:load />
+    <Featurepics />
+    <Testimonials client:load />
+</Layout>
